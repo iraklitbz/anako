@@ -1,0 +1,36 @@
+---
+import HomeLayout from '../layouts/HomeLayout.astro'
+import { contentfulClient } from "../lib/contentful"
+import type { EntryFieldTypes } from "contentful"
+import Menu from '../components/Menu.astro'
+interface ComercialPortfolio {
+  contentTypeId: "homeSlider",
+  fields: {
+    name: EntryFieldTypes.Text
+    photo: EntryFieldTypes.AssetLink
+  }
+}
+
+const entryId = import.meta.env.HOME_SLIDER_ID
+const entry = await contentfulClient.getEntry<ComercialPortfolio>(entryId)
+const mainImage = entry.fields.photo.fields.file.url
+const backgroundImageStyle = `background-image: url('${mainImage}');`
+---
+
+<HomeLayout title="Anako">
+	<section>
+		<div class="h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center" style={backgroundImageStyle}>
+			<div
+				class="flex flex-col items-center justify-center"
+			>
+				<a 
+					class="text-3xl text-white mb-10"
+					href="/">Anako
+				</a>
+				<Menu 
+					isHome={true}
+				/>
+			</div>
+		</div>
+	</section>
+</HomeLayout>

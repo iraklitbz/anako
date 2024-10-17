@@ -1,0 +1,28 @@
+---
+import MainLayout from '../layouts/MainLayout.astro'
+import Masonry from '../components/Masonry.astro'
+import { contentfulClient } from "../lib/contentful"
+import type { EntryFieldTypes } from "contentful"
+
+interface ComercialPortfolio {
+  contentTypeId: "comercialPortfolio",
+  fields: {
+    name: EntryFieldTypes.Text
+    gallery: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>,
+  }
+}
+
+const entryId = import.meta.env.PERSONAL_PROYECTS_ID
+const entry = await contentfulClient.getEntry<ComercialPortfolio>(entryId);
+---
+
+<MainLayout title="Anako | Personal Projects">
+	<section
+		class="px-10 py-5 mx-auto max-w-xl md:max-w-7xl"
+	>
+    <Masonry 
+      gallery={entry.fields.gallery}
+    />
+	</section>
+</MainLayout>
+

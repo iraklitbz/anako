@@ -1,0 +1,39 @@
+---
+import MainLayout from '../layouts/MainLayout.astro'
+const socialMedia = [
+	{
+		name: "instagram",
+		url: "",
+		icon: "instagram"
+	},
+	{
+		name: "whatsapp",
+		url: "",
+		icon: "whatsapp"
+	}
+]
+---
+
+<MainLayout title="Anako | Contact me">
+	<section
+        class="px-10 py-5 mx-auto max-w-xl md:max-w-7xl"
+    >
+		<div>
+			<h1 class="text-5xl font-bold"> Contact me </h1>
+			<p class="mt-10 text-lg">
+				You can contact me through my email: <a class="text-blue-600 underline" href="mailto:anakoturashvili1@gmail.com">anakoturashvili1@gmail.com</a>
+			</p>
+			<p class="mt-5 text-lg">
+				Or through my social media:
+			</p>
+			<div class="flex gap-5 mt-5">
+				{
+					socialMedia.map(item => (
+						<li>
+							<a href={`/${item.url}`}> {item.name} </a>
+						</li>
+					))
+				}
+		</div>
+	</section>
+</MainLayout>

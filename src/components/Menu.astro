@@ -1,0 +1,36 @@
+---
+const { isHome } = Astro.props
+console.log(isHome)
+const menu = [
+    {
+        name: 'Comercial Portfolio',
+        slug: 'comercial-portolio'
+    },
+    {
+        name: 'Personal Projects',
+        slug: 'personal-projects'
+    },
+    {
+        name: 'About me',
+        slug: 'about'
+    },
+    {
+        name: 'Contact',
+        slug: 'contact'
+    }
+]
+---
+
+<nav>
+    <ul
+        class={`inline-flex ${isHome ? 'text-white gap-10 text-3xl' : 'gap-5' }`}
+    >
+        {
+            menu.map(item => (
+                <li>
+                    <a href={`/${item.slug}`}> {item.name} </a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>

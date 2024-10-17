@@ -1,0 +1,50 @@
+---
+const { gallery } = Astro.props;
+---
+
+{gallery.length > 0 && (
+  <div id="masonry-layout">
+    {
+      gallery.map(item => (
+        <div class="item" key={item.fields.title}>
+          <picture>
+            <source srcset={`${item.fields.file.url + '?w=1200&h=700&fm=avif'}`} type="image/avif" />
+            <source srcset={`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`} type="image/webp" />
+            <img
+              src={`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`} 
+              width="1200"
+              height="700"
+              decoding="async"
+              loading="lazy"
+              alt={item.fields.title}
+            />
+          </picture>
+        </div>
+      ))
+    }
+  </div>
+)}
+<script>
+  // @ts-ignore
+  import Macy from 'macy';
+
+  document.addEventListener('astro:page-load', () => {
+    const masonryLayout = document.getElementById('masonry-layout');
+
+    if (masonryLayout && masonryLayout.children.length > 0) {
+      const macyInstance = Macy({
+        container: '#masonry-layout',
+        trueOrder: false,
+        waitForImages: false,
+        margin: 40,
+        columns: 3,
+        breakAt: {
+          1200: 3,
+          900: 2,
+          600: 1,
+        },
+      });
+      macyInstance.recalculate(true);
+    }
+  });
+</script>
