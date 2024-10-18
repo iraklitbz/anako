@@ -52,10 +52,10 @@ const backgroundImageStyle = `background-image: url('${mainImage}');`
 		<canvas class="w-full h-screen absolute z-20 opacity-50" id="canvas"></canvas>
 		<div class="h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center animate-zoom" style={backgroundImageStyle}></div>
     <div
-			class="flex flex-col items-center justify-center absolute left-1/2 bottom-10 md:bottom-1/2 md:-translate-y-1/2 -translate-x-1/2 z-50"
+			class="flex flex-col items-center justify-center absolute left-1/2 top-10 md:bottom-1/2 md:-translate-y-1/2 -translate-x-1/2 z-50"
 		>
 			<a 
-				class="md:hidden text-3xl text-white mb-10"
+				class="md:hidden text-3xl text-white mb-5"
 				href="/">Anako
 			</a>
 			<button
@@ -78,7 +78,7 @@ const backgroundImageStyle = `background-image: url('${mainImage}');`
     >   
     
         <ul
-            class="menuM py-10 text-black flex flex-col justify-center pl-10 motion-preset-slide-right motion-duration-400 gap-8 text-2xl"
+            class="menuM py-10 text-black flex flex-col justify-center pl-10 pt-40 motion-preset-slide-right motion-duration-400 gap-8 text-2xl"
         >
         <li>
             <a 
@@ -88,7 +88,7 @@ const backgroundImageStyle = `background-image: url('${mainImage}');`
         </li>
             {menu.map(item => (
                 <li>
-                    <a class="text-white text-nowrap block w-full hover:motion-preset-focus hover:motion-duration-800 transition-colors ease-in-out hover:text-yellow-100" href={`/${item.slug}`}> {item.name} </a>
+                    <a class="text-white text-nowrap block w-full transition-colors ease-in-out hover:text-yellow-100" href={`/${item.slug}`}> {item.name} </a>
                 </li>
             ))}
         </ul>

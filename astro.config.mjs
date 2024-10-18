@@ -7,9 +7,11 @@ import icon from 'astro-icon';
 
 import vercel from '@astrojs/vercel/serverless';
 
+import vue from '@astrojs/vue';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), icon()],
+  integrations: [tailwind(), icon(), vue()],
 
   vite: {
       css: {
