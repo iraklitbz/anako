@@ -1,9 +1,19 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro'
 import { contentfulClient } from "../lib/contentful"
-import type { EntryFieldTypes } from "contentful"
+import type { EntryFieldTypes, Entry } from "contentful"
 import { marked } from "marked"
 
+interface ICover {
+  fields: {
+    title?: string,
+    file: {
+      fileName?: string,
+      url?: string
+    },
+    description?: string
+  }
+}
 interface About {
   contentTypeId: "about",
   fields: {
@@ -14,31 +24,39 @@ interface About {
 }
 
 const entryId = import.meta.env.ABOUT_ID
-const entry = await contentfulClient.getEntry<About>(entryId)
-const formattedDescription = marked(entry.fields.description)
-console.log(entry)
+const entry: Entry<About> | null = await contentfulClient.getEntry<About>(entryId);
+let formattedDescription = "";
+if (entry) {
+  formattedDescription = await marked(entry.fields.description.toString())
+} else {
+  console.error("Entry not found or has incorrect structure.")
+}
 ---
 
 <MainLayout title="Anako | About Me">
 	<section
     class="px-10 py-5 mx-auto max-w-xl md:max-w-7xl"
   >
-		<div class="flex justify-between gap-5">
+		<div class="md:flex justify-between gap-5">
       <div>
-        <h1 class="text-5xl font-bold"> {entry.fields.title} </h1>
+        <h1 class="text-5xl font-bold"> 
+          {entry?.fields?.title} 
+        </h1>
         <article 
           class="article mt-10" 
           set:html={formattedDescription}>
         </article>
       </div>
-      <div>
+      <div
+        class="mt-10 md:mt-0"
+      >
         <img
-              src={`${entry.fields.photo.fields.file.url + '?w=1200&h=700&fm=webp'}`} 
+              src={`${(entry?.fields?.photo as ICover)?.fields?.file.url + '?w=1200&h=700&fm=webp'}`}
               width="1200"
               height="700"
               decoding="async"
               loading="lazy"
-              alt={entry.fields.photo.fields.title}
+              alt={(entry?.fields?.photo as ICover)?.fields?.title}
             />
       </div>
     </div>

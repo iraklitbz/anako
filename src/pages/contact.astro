@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro'
+import { Icon } from 'astro-icon/components'
 const socialMedia = [
 	{
 		name: "instagram",
@@ -26,14 +27,16 @@ const socialMedia = [
 			<p class="mt-5 text-lg">
 				Or through my social media:
 			</p>
-			<div class="flex gap-5 mt-5">
+			<ul class="flex gap-5 mt-5">
 				{
 					socialMedia.map(item => (
-						<li>
+						<li class="flex items-center">
+							<Icon class="mr-2 text-4xl" name={item.icon} />
 							<a href={`/${item.url}`}> {item.name} </a>
 						</li>
 					))
 				}
+			</ul>
 		</div>
 	</section>
 </MainLayout>

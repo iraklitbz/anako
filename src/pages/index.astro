@@ -2,7 +2,35 @@
 import HomeLayout from '../layouts/HomeLayout.astro'
 import { contentfulClient } from "../lib/contentful"
 import type { EntryFieldTypes } from "contentful"
-import Menu from '../components/Menu.astro'
+const menu = [
+    {
+        name: 'Comercial Portfolio',
+        slug: 'comercial-portolio'
+    },
+    {
+        name: 'Personal Projects',
+        slug: 'personal-projects'
+    },
+    {
+        name: 'About me',
+        slug: 'about'
+    },
+    {
+        name: 'Contact',
+        slug: 'contact'
+    }
+]
+import '../scss/bg.scss'
+interface ICover {
+  fields: {
+    title?: string,
+    file: {
+      fileName?: string,
+      url?: string
+    },
+    description?: string
+  }
+}
 interface ComercialPortfolio {
   contentTypeId: "homeSlider",
   fields: {
@@ -13,24 +41,143 @@ interface ComercialPortfolio {
 
 const entryId = import.meta.env.HOME_SLIDER_ID
 const entry = await contentfulClient.getEntry<ComercialPortfolio>(entryId)
-const mainImage = entry.fields.photo.fields.file.url
+	
+const mainImage = (entry?.fields?.photo as ICover)?.fields?.file.url
 const backgroundImageStyle = `background-image: url('${mainImage}');`
 ---
 
 <HomeLayout title="Anako">
-	<section>
-		<div class="h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center" style={backgroundImageStyle}>
-			<div
-				class="flex flex-col items-center justify-center"
-			>
-				<a 
-					class="text-3xl text-white mb-10"
-					href="/">Anako
-				</a>
-				<Menu 
-					isHome={true}
-				/>
-			</div>
+	<section
+		class="overflow-hidden relative w-full h-screen"
+	>
+		<canvas class="w-full h-screen absolute z-20 opacity-50" id="canvas"></canvas>
+		<div class="h-screen bg-cover bg-no-repeat bg-center flex items-center justify-center animate-zoom" style={backgroundImageStyle}></div>
+    <div
+			class="flex flex-col items-center justify-center absolute left-1/2 bottom-10 md:bottom-1/2 md:-translate-y-1/2 -translate-x-1/2 z-50"
+		>
+			<a 
+				class="md:hidden text-3xl text-white mb-10"
+				href="/">Anako
+			</a>
+			<button
+          id="openMenuHome"
+          type="button" 
+          class="three col cursor-pointer block md:hidden"
+      >
+          <div class="hamburger" id="hamburgerHome">
+              {Array.from({ length: 3 }).map((_, index) => (
+                  <span 
+                      class={`line w-10 h-1 bg-white block transition-all ease-in-out duration-300 my-1.5`}
+                  ></span>
+              ))}
+          </div>
+      </button>
 		</div>
+    <div
+        id="menuMobileHome"
+        class="hidden md:flex fixed md:absolute top-0 left-0 right-0 bottom-0 bg-black md:bg-transparent z-40 overflow-y-auto"
+    >   
+    
+        <ul
+            class="menuM py-10 text-black flex flex-col justify-center pl-10 motion-preset-slide-right motion-duration-400 gap-8 text-2xl"
+        >
+        <li>
+            <a 
+              class="hidden md:block text-3xl text-white mb-10"
+              href="/">Anako
+            </a>
+        </li>
+            {menu.map(item => (
+                <li>
+                    <a class="text-white text-nowrap block w-full hover:motion-preset-focus hover:motion-duration-800 transition-colors ease-in-out hover:text-yellow-100" href={`/${item.slug}`}> {item.name} </a>
+                </li>
+            ))}
+        </ul>
+    </div>
 	</section>
 </HomeLayout>
+<style>
+	@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-zoom {
+  animation: zoom 10s ease-in-out infinite;
+}
+
+.expandEffect {
+    @apply block md:hidden motion-preset-expand motion-duration-300;
+}
+.menuM {
+    @apply opacity-0 md:opacity-100;
+}
+#menuMobileHome.expandEffect .menuM {
+    @apply opacity-100;
+}
+#hamburgerHome.is-active .line:nth-child(2){
+    opacity: 0;
+}
+#hamburgerHome.is-active .line:nth-child(1){
+-webkit-transform: translateY(10px) rotate(45deg);
+-ms-transform: translateY(10px) rotate(45deg);
+-o-transform: translateY(10px) rotate(45deg);
+transform: translateY(10px) rotate(45deg);
+}
+
+#hamburgerHome.is-active .line:nth-child(3){
+-webkit-transform: translateY(-10px) rotate(-45deg);
+-ms-transform: translateY(-10px) rotate(-45deg);
+-o-transform: translateY(-10px) rotate(-45deg);
+transform: translateY(-10px) rotate(-45deg);
+}
+
+</style>
+<script src="../scripts/dust.js"></script>
+<script>
+  import { isMenuOpen } from '../store/menu'
+  document.addEventListener('astro:page-load', () => {
+      isMenuOpen.set(false)
+      function openDialog() {
+          isMenuOpen.set(!isMenuOpen.value)
+      }
+      const openMenuButton = document.getElementById('openMenuHome')
+      if (openMenuButton) {
+          openMenuButton.addEventListener('click', openDialog)
+      }
+
+      isMenuOpen.subscribe(value => {
+          const hamburger1 = document.getElementById('hamburgerHome')
+          const menuMobile = document.getElementById('menuMobileHome')
+          const body = document.body
+          if (hamburger1) {
+              if (value) {
+                  hamburger1.classList.add('is-active')
+              } else {
+                  hamburger1.classList.remove('is-active')
+              }
+          }
+          if (menuMobile) {
+              if (value) {
+                  menuMobile.classList.add('expandEffect')
+              } else {
+                  menuMobile.classList.remove('expandEffect')
+              }
+          }
+          if (body) {
+              if (value) {
+                  body.style.overflow = 'hidden';
+              } else {
+                  body.style.overflow = '';
+              }
+          }
+      });
+  });
+</script>

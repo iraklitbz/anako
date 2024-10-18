@@ -1,6 +1,5 @@
 ---
 const { isHome } = Astro.props
-console.log(isHome)
 const menu = [
     {
         name: 'Comercial Portfolio',
@@ -22,15 +21,115 @@ const menu = [
 ---
 
 <nav>
+    {!isHome && (
+        <button
+            id="openMenu"
+            type="button" 
+            class="three col cursor-pointer block md:hidden"
+        >
+            <div class="hamburger" id="hamburger-1">
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <span 
+                        class={`line w-10 h-1 bg-white block transition-all ease-in-out duration-300 my-1.5`}
+                    ></span>
+                ))}
+            </div>
+        </button>
+    )}
     <ul
-        class={`inline-flex ${isHome ? 'text-white gap-10 text-3xl' : 'gap-5' }`}
+        class={`text-white hidden md:inline-flex ${isHome ? 'gap-10 text-3xl' : 'gap-5' }`}
     >
         {
             menu.map(item => (
                 <li>
-                    <a href={`/${item.slug}`}> {item.name} </a>
+                    <a class="text-nowrap hover:motion-preset-focus hover:motion-duration-800 transition-colors ease-in-out hover:text-yellow-100" href={`/${item.slug}`}> {item.name} </a>
                 </li>
             ))
         }
     </ul>
+    {!isHome && (
+        <div
+            id="menuMobile"
+            class="hidden fixed top-20 left-0 right-0 bottom-0 bg-white z-40 overflow-y-auto"
+        >   
+            <ul
+                class={`menuM py-10 text-black flex flex-col justify-center pl-10 motion-preset-slide-right motion-duration-400 ${isHome ? 'gap-10 text-3xl' : 'gap-8 text-2xl'}`}
+            >
+                {menu.map(item => (
+                    <li>
+                        <a class="text-nowrap block w-full" href={`/${item.slug}`}> {item.name} </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
 </nav>
+
+<style>
+    .expandEffect {
+        @apply block md:hidden motion-preset-expand motion-duration-300;
+    }
+    .menuM {
+        @apply opacity-0;
+    }
+    #menuMobile.expandEffect .menuM {
+        @apply opacity-100;
+    }
+    #hamburger-1.is-active .line:nth-child(2){
+        opacity: 0;
+    }
+    #hamburger-1.is-active .line:nth-child(1){
+    -webkit-transform: translateY(10px) rotate(45deg);
+    -ms-transform: translateY(10px) rotate(45deg);
+    -o-transform: translateY(10px) rotate(45deg);
+    transform: translateY(10px) rotate(45deg);
+    }
+
+    #hamburger-1.is-active .line:nth-child(3){
+    -webkit-transform: translateY(-10px) rotate(-45deg);
+    -ms-transform: translateY(-10px) rotate(-45deg);
+    -o-transform: translateY(-10px) rotate(-45deg);
+    transform: translateY(-10px) rotate(-45deg);
+    }
+</style>
+
+<script>
+    import { isMenuOpen } from '../store/menu'
+    document.addEventListener('astro:page-load', () => {
+        isMenuOpen.set(false)
+        function openDialog() {
+            isMenuOpen.set(!isMenuOpen.value)
+        }
+        const openMenuButton = document.getElementById('openMenu')
+        if (openMenuButton) {
+            openMenuButton.addEventListener('click', openDialog)
+        }
+
+        isMenuOpen.subscribe(value => {
+            const hamburger1 = document.getElementById('hamburger-1')
+            const menuMobile = document.getElementById('menuMobile')
+            const body = document.body
+            if (hamburger1) {
+                if (value) {
+                    hamburger1.classList.add('is-active')
+                } else {
+                    hamburger1.classList.remove('is-active')
+                }
+            }
+            if (menuMobile) {
+                if (value) {
+                    menuMobile.classList.add('expandEffect')
+                } else {
+                    menuMobile.classList.remove('expandEffect')
+                }
+            }
+            if (body) {
+                if (value) {
+                    body.style.overflow = 'hidden';
+                } else {
+                    body.style.overflow = '';
+                }
+            }
+        });
+    });
+</script>
