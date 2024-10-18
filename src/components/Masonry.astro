@@ -38,7 +38,6 @@ interface ICover {
   </div>
 )}
 <script>
-  // @ts-ignore
   import Macy from 'macy';
 
   document.addEventListener('astro:page-load', () => {
@@ -57,7 +56,7 @@ interface ICover {
           600: 1,
         },
       });
-      macyInstance.recalculate(true);
+      macyInstance ? macyInstance.recalculate(true) : null
     }
   });
 </script>
