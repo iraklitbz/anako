@@ -23,6 +23,7 @@ const entry = await contentfulClient.getEntry<ComercialPortfolio>(entryId)
     <Masonry 
       gallery={entry.fields.gallery}
       client:only="vue"
+      isModal={true}
     />
 	</section>
 </MainLayout>

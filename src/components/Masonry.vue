@@ -9,7 +9,8 @@
                     v-for="(item, index) in gallery"
                     :key="index"
                     class="myButton item group"
-                    @click="handleOpenModal(item)"
+                    :class="isModal ? 'cursor-pointer' : ''"
+                    @click="isModal ? handleOpenModal(item) : null"
                 >
                     <picture>
                     <source :srcset="`${item.fields.file.url + '?w=1200&h=700&fm=avif'}`" type="image/avif" />
@@ -27,26 +28,29 @@
                 </div>
         </div>
         <div 
-            v-if="isModalOpen"
-            class="fixed bg-white/95 top-16 left-0 w-full h-screen overflow-y-auto flex items-center flex-col motion-preset-expand motion-duration-300"
+            v-if="isModalOpen && isModal"
+            class="fixed bg-gray-400 top-16 left-0 w-full h-screen overflow-y-auto flex items-center flex-col motion-preset-expand motion-duration-300"
         >
             <button
                 class="three col cursor-pointer block mt-5 font-bold"
                  @click="handleCloseModal()"
             >
-                Close
+                Close X
             </button>
             <div
-                class="mx-auto max-w-xl md:max-w-7xl px-10 h-[calc(100vh-12rem)] mt-5 mb-20"
+                class="mx-auto max-w-xl md:max-w-7xl px-10 h-[calc(100vh-12rem)] mt-5 mb-20 relative"
             >
+              <div
+                class="h-5 w-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              >
+                <span class="animate-ping inline-flex h-full w-full rounded-full bg-white opacity-75 absolute"></span>
+              </div>
                 <img
                     :src="`${entryDetail.fields.file.url + '?w=1200&h=700&fm=webp'}`"
-                    class="object-contain h-full"
-                    width="1200"
-                    height="700"
+                    class="object-contain h-full motion-preset-shrink"
                     decoding="async"
                     loading="lazy"
-                    alt={item.fields.title}
+                    :alt="entryDetail.fields.title"
                 />
             </div>
         </div>
@@ -61,7 +65,11 @@ export default {
     gallery: {
       type: Array,
       default: () => [],
-    }
+    },
+    isModal: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
