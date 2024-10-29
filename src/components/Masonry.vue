@@ -13,17 +13,17 @@
                     @click="isModal ? handleOpenModal(item) : null"
                 >
                     <picture>
-                    <source :srcset="`${item.fields.file.url + '?w=1200&h=700&fm=avif'}`" type="image/avif" />
-                    <source :srcset="`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`" type="image/webp" />
-                    <img
-                        :src="`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`"
-                        class="group-hover:scale-105 transition-all duration-300 ease-in-out"
-                        width="1200"
-                        height="700"
-                        decoding="async"
-                        loading="lazy"
-                        alt={item.fields.title}
-                    />
+                      <source :srcset="`${item.fields.file.url + '?w=1200&h=700&fm=avif'}`" type="image/avif" />
+                      <source :srcset="`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`" type="image/webp" />
+                      <img
+                          :src="`${item.fields.file.url + '?w=1200&h=700&fm=webp'}`"
+                          class="group-hover:scale-105 transition-all duration-300 ease-in-out"
+                          width="1200"
+                          height="700"
+                          decoding="async"
+                          loading="lazy"
+                          alt={item.fields.title}
+                      />
                     </picture>
                 </div>
         </div>
