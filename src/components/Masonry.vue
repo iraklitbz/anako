@@ -27,8 +27,8 @@
       v-if="isModalOpen && isModal"
       class="fixed bg-gray-400 top-16 left-0 w-full h-screen overflow-y-auto flex items-center flex-col motion-preset-expand motion-duration-300"
     >
-      <button class="three col cursor-pointer block mt-5 font-bold" @click="handleCloseModal()">
-        Close X
+      <button class="three col cursor-pointer block mt-5 font-bold group hover:underline" @click="handleCloseModal()">
+        Close <span class="group-hover:motion-preset-shake motion-duration-300 inline-block pl-1">X</span>
       </button>
       <div class="mx-auto max-w-xl md:max-w-7xl px-10 h-[calc(100vh-12rem)] mt-5 mb-20 relative">
         <div class="h-5 w-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
