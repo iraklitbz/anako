@@ -58,12 +58,13 @@ const mainImage = (entry?.fields?.photo as ICover)?.fields?.file.url
               loading="lazy"
               alt="Anako"
             />
-        <div
+                <div
                     class="flex flex-col items-center justify-center absolute left-1/2 top-10 md:bottom-1/2 md:-translate-y-1/2 -translate-x-1/2 z-50"
                 >
                     <a 
-                        class="md:hidden text-3xl text-white mb-5"
-                        href="/">Anako
+                        class="md:hidden text-3xl text-white mb-5 logo"
+                        href="/">
+                        <b>Anako Turashvili</b>
                     </a>
                     <button
                 id="openMenuHome"
@@ -81,18 +82,20 @@ const mainImage = (entry?.fields?.photo as ICover)?.fields?.file.url
 		</div>
     <div
         id="menuMobileHome"
-        class="hidden md:flex fixed md:absolute top-0 left-0 right-0 bottom-0 bg-black md:bg-transparent z-40 overflow-y-auto"
+        class="hidden flex-col md:flex fixed md:absolute top-0 left-0 right-0 bottom-0 bg-black md:bg-transparent z-40 overflow-y-auto h-screen justify-center"
     >   
-    
-        <ul
-            class="menuM py-10 text-black flex flex-col justify-center pl-10 pt-40 motion-preset-slide-right motion-duration-400 gap-8 text-2xl"
+        <h1
+            class="items-center flex justify-center -mt-40"
         >
-        <li>
             <a 
-              class="hidden md:block text-3xl text-white mb-10"
-              href="/">Anako
+            class="hidden md:block text-4xl text-white mb-10 logo"
+            href="/">
+            <b>Anako Turashvili</b>
             </a>
-        </li>
+        </h1>
+        <ul
+            class="menuM text-black flex flex-row justify-center pl-10 motion-preset-slide-right motion-duration-400 gap-8 text-2xl"
+        >
             {menu.map(item => (
                 <li>
                     <a class="text-white text-nowrap block w-full transition-colors ease-in-out hover:text-yellow-100" href={`/${item.slug}`}> {item.name} </a>

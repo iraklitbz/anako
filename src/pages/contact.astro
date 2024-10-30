@@ -4,35 +4,38 @@ import { Icon } from 'astro-icon/components'
 const socialMedia = [
 	{
 		name: "instagram",
-		url: "",
-		icon: "instagram"
+		url: "https://www.instagram.com/anako_turashvili/",
+		icon: "instagram",
+		color: "#E1306C"
 	},
 	{
 		name: "whatsapp",
-		url: "",
-		icon: "whatsapp"
+		url: "https://wa.me/0034642480293",
+		icon: "whatsapp",
+		color: "#25d366"
 	}
 ]
 ---
 
 <MainLayout title="Anako | Contact me">
 	<section
-        class="px-10 py-5 mx-auto max-w-xl md:max-w-7xl"
+        class="px-10 py-5 mx-auto max-w-xl md:max-w-7xl text-center"
     >
 		<div>
 			<h1 class="text-5xl font-bold"> Contact me </h1>
 			<p class="mt-10 text-lg">
-				You can contact me through my email: <a class="text-blue-600 underline" href="mailto:anakoturashvili1@gmail.com">anakoturashvili1@gmail.com</a>
+				You can contact me through my email: 
+				<a class="text-blue-600 underline block hover:text-blue-900 transition-colors ease-in-out duration-300" href="mailto:anakoturashvili1@gmail.com">anakoturashvili1@gmail.com</a>
 			</p>
 			<p class="mt-5 text-lg">
 				Or through my social media:
 			</p>
-			<ul class="flex gap-5 mt-5">
+			<ul class="flex gap-5 mt-5 justify-center">
 				{
 					socialMedia.map(item => (
-						<li class="flex items-center">
-							<Icon class="mr-2 text-4xl" name={item.icon} />
-							<a href={`/${item.url}`}> {item.name} </a>
+						<li class="flex items-center hover:motion-preset-bounce">
+							<Icon class="mr-2 text-4xl" name={item.icon} style={`color:${item.color}`} />
+							<a class="hover:underline" href={`/${item.url}`} target="_blank"> {item.name} </a>
 						</li>
 					))
 				}
