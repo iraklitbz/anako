@@ -53,10 +53,12 @@ const menu = [
             class="hidden fixed top-20 left-0 right-0 bottom-0 bg-white z-40 overflow-y-auto"
         >   
             <ul
-                class={`menuM py-10 text-black flex flex-col justify-center pl-10 motion-preset-slide-right motion-duration-400 ${isHome ? 'gap-10 text-3xl' : 'gap-8 text-2xl'}`}
+                class={`menuM py-10 text-black flex flex-col justify-center md:pl-10 motion-preset-slide-right motion-duration-400 ${isHome ? 'gap-10 text-3xl' : 'gap-8 text-2xl'}`}
             >
                 {menu.map(item => (
-                    <li>
+                    <li
+                        class="px-10 md:px-0 text-center"
+                    >
                         <a class="text-nowrap block w-full" href={`/${item.slug}`}> {item.name} </a>
                     </li>
                 ))}
