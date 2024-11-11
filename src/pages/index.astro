@@ -4,12 +4,12 @@ import { contentfulClient } from "../lib/contentful"
 import type { EntryFieldTypes } from "contentful"
 const menu = [
     {
-        name: 'Comercial Portfolio',
-        slug: 'comercial-portolio'
-    },
-    {
         name: 'Personal Projects',
         slug: 'personal-projects'
+    },
+    {
+        name: 'Comercial Portfolio',
+        slug: 'comercial-portolio'
     },
     {
         name: 'About me',
@@ -62,7 +62,7 @@ const mainImage = (entry?.fields?.photo as ICover)?.fields?.file.url
                     class="flex flex-col items-center justify-center absolute left-1/2 top-10 md:bottom-1/2 md:-translate-y-1/2 -translate-x-1/2 z-50"
                 >
                     <a 
-                        class="md:hidden text-3xl md:text-6xl text-center text-white mb-5 logo"
+                        class="md:hidden text-3xl md:text-6xl text-center text-white mb-5 logo uppercase"
                         href="/">
                         <b>Anako Turashvili</b>
                     </a>
@@ -88,7 +88,7 @@ const mainImage = (entry?.fields?.photo as ICover)?.fields?.file.url
             class="items-center flex justify-center md:-mt-40"
         >
             <a 
-            class="hidden md:block text-4xl md:text-6xl text-white mb-28 logo"
+            class="hidden md:block text-4xl md:text-6xl text-white mb-28 logo uppercase"
             href="/">
                 <b>Anako Turashvili</b>
             </a>

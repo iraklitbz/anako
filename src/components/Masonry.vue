@@ -4,8 +4,8 @@
       <template #default="{ item }">
         <div
           class="myButton item group"
-          :class="isModal ? 'cursor-pointer' : ''"
-          @click="isModal ? handleOpenModal(item) : null"
+          :class="isModal && !item.fields.title.includes('blank') ? 'cursor-pointer' : ''"
+          @click="isModal && !item.fields.title.includes('blank') ? handleOpenModal(item) : null"
         >
           <picture>
             <source :srcset="`${item.fields.file.url}?w=1200&h=700&fm=avif`" type="image/avif" />
@@ -13,6 +13,7 @@
             <img
               :src="`${item.fields.file.url}?w=1200&h=700&fm=webp`"
               class="group-hover:scale-105 transition-all duration-300 ease-in-out"
+              :class="item.fields.title.includes('blank') ? ' hidden lg:block' : ''"
               width="1200"
               height="700"
               decoding="async"

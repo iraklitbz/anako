@@ -35,7 +35,7 @@ const socialMedia = [
 					socialMedia.map(item => (
 						<li class="flex items-center hover:motion-preset-bounce">
 							<Icon class="mr-2 text-4xl" name={item.icon} style={`color:${item.color}`} />
-							<a class="hover:underline" href={`/${item.url}`} target="_blank"> {item.name} </a>
+							<a class="hover:underline" href={`${item.url}`} target="_blank"> {item.name} </a>
 						</li>
 					))
 				}
